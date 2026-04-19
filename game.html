@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Play - LexiGuess</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg" alt="LexiGuess" class="logo-img">
+        <h2>LexiGuess</h2>
+    </div>
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="howtoplay.html">HOW TO PLAY</a>
+        <a href="game.html" class="btn-more">DOWNLOAD</a>
+    </nav>
+</header>
+
+<section class="page-hero">
+    <h1>Play <span class="accent">LexiGuess</span></h1>
+    <p>Download and start your vocabulary adventure</p>
+</section>
+
+<section class="game">
+    <div class="game-card">
+        <div class="game-big-icon">🎮</div>
+        <h2>LexiGuess Desktop</h2>
+        <p>A Java Swing desktop application for all platforms.<br>Download the game file and run it locally.</p>
+
+        <div class="game-stats">
+            <div class="stat">
+                <span class="stat-num">3</span>
+                <span class="stat-label">Difficulty Levels</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">600</span>
+                <span class="stat-label">Words</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">∞</span>
+                <span class="stat-label">Replayable</span>
+            </div>
+        </div>
+
+        <button class="btn-primary btn-download" onclick="openDownloadModal()">
+            ⬇ Download Game
+        </button>
+        <p class="game-note">Java Runtime required · Works offline</p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 LexiGuess — Built with ❤️ by our team</p>
+</footer>
+
+<!-- Download Modal -->
+<div class="modal-overlay" id="downloadModal" onclick="handleModalClick(event)">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeDownloadModal()">✕</button>
+        <div class="modal-icon">⬇</div>
+        <h2>Download LexiGuess</h2>
+        <p>Choose your platform to get started</p>
+        <div class="modal-options">
+            <a href="YOUR_PLAY_STORE_LINK" target="_blank" class="store-btn">
+                <img src="playstore.webp" alt="Google Play" class="store-icon">
+                <div>
+                    <span class="store-label">GET IT ON</span>
+                    <span class="store-name">Google Play</span>
+                </div>
+            </a>
+            <a href="YOUR_APP_STORE_LINK" target="_blank" class="store-btn">
+                <img src="appstore.webp" alt="App Store" class="store-icon">
+                <div>
+                    <span class="store-label">DOWNLOAD ON THE</span>
+                    <span class="store-name">App Store</span>
+                </div>
+            </a>
+        </div>
+        <p class="game-note" style="margin-top: 18px;">Free to download · Works offline</p>
+    </div>
+</div>
+
+<script>
+    function openDownloadModal() {
+        document.getElementById('downloadModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDownloadModal() {
+        document.getElementById('downloadModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function handleModalClick(e) {
+        if (e.target === document.getElementById('downloadModal')) closeDownloadModal();
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeDownloadModal();
+    });
+</script>
+</body>
+</html>

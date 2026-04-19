@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LexiGuess</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .video-section {
+            padding: 90px 60px;
+            text-align: center;
+            background: var(--dark);
+        }
+
+        .video-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto 0;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(69, 123, 157, 0.35);
+            box-shadow: 0 0 60px rgba(69, 123, 157, 0.2);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+            border-radius: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .video-section { padding: 60px 20px; }
+        }
+
+        /* ===== CAROUSEL ===== */
+        .carousel-wrapper {
+            position: relative;
+            width: 940px;
+            height: 940px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-wrapper .glow-ring {
+            position: absolute;
+            width: 950px;
+            height: 950px;
+            border-radius: 50%;
+            border: 2px solid rgba(69, 123, 157, 0.4);
+            box-shadow: 0 0 60px rgba(69, 123, 157, 0.3), inset 0 0 60px rgba(69, 123, 157, 0.1);
+            animation: pulse 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-ring-outer {
+            position: absolute;
+            width: 1000px;
+            height: 1000px;
+            border-radius: 50%;
+            border: 1px solid rgba(69, 123, 157, 0.15);
+            animation: pulse 3s ease-in-out infinite reverse;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+.carousel {
+    width: 600px;
+    height: 600px;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 1px solid rgba(69, 123, 157, 0.5);
+    box-shadow:
+        0 0 0 6px rgba(69, 123, 157, 0.08),
+        0 0 40px rgba(69, 123, 157, 0.35),
+        0 20px 60px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: box-shadow 0.3s;
+}
+
+        .carousel:hover {
+            box-shadow:
+                0 0 0 6px rgba(69, 123, 157, 0.12),
+                0 0 60px rgba(69, 123, 157, 0.5),
+                0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-track img {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .carousel-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(168, 218, 220, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .carousel-dot.active {
+            background: var(--light);
+            width: 18px;
+            border-radius: 3px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(13, 31, 51, 0.8);
+            border: 1px solid rgba(69, 123, 157, 0.45);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+            backdrop-filter: blur(8px);
+        }
+
+        .carousel-btn:hover {
+            background: rgba(69, 123, 157, 0.55);
+            border-color: var(--light);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-btn.prev { left: 100px; }
+        .carousel-btn.next { right: 100px; }
+
+        /* Click hint */
+        .carousel-hint {
+            position: absolute;
+            bottom: -36px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.72rem;
+            color: rgba(168, 218, 220, 0.45);
+            letter-spacing: 1.5px;
+            font-family: 'Rajdhani', sans-serif;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(12px);
+            animation: fadeIn 0.25s ease;
+        }
+
+        .lightbox.open { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .lightbox-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .lightbox img {
+            max-width: 85vw;
+            max-height: 80vh;
+            border-radius: 16px;
+            border: 1px solid rgba(69, 123, 157, 0.4);
+            box-shadow: 0 0 80px rgba(69, 123, 157, 0.3);
+            animation: zoomIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.88); opacity: 0; }
+            to   { transform: scale(1);    opacity: 1; }
+        }
+
+        .lightbox-btn {
+            background: rgba(13, 31, 51, 0.85);
+            border: 1px solid rgba(69, 123, 157, 0.45);
+            color: var(--white);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+            flex-shrink: 0;
+            backdrop-filter: blur(8px);
+        }
+
+        .lightbox-btn:hover {
+            background: rgba(69, 123, 157, 0.55);
+            border-color: var(--light);
+            transform: scale(1.1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(13, 31, 51, 0.85);
+            border: 1px solid rgba(69, 123, 157, 0.45);
+            color: var(--white);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+            backdrop-filter: blur(8px);
+        }
+
+        .lightbox-close:hover {
+            background: rgba(220, 80, 80, 0.4);
+            border-color: #f87171;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: -38px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(168, 218, 220, 0.5);
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg" alt="LexiGuess" class="logo-img">
+        <h2>LexiGuess</h2>
+    </div>
+    <nav>
+        <a href="index.html" class="active">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="howtoplay.html">HOW TO PLAY</a>
+        <a href="game.html" class="btn-more">DOWNLOAD</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Unlock Your<br><span class="accent">Programming</span><br>Vocabulary</h1>
+        <p>Guess hidden programming words. One stage at a time.<br>Challenge your mind and grow your tech knowledge.</p>
+        <div class="hero-btns">
+            <a href="game.html"><button class="btn-primary">DOWNLOAD</button></a>
+            <a href="howtoplay.html"><button class="btn-secondary">How to Play</button></a>
+        </div>
+
+        <div class="featured-cards">
+            <div class="feat-card" onclick="rotateTo('guess')">
+                <div class="feat-icon">🎯</div>
+                <span>Guess</span>
+            </div>
+
+            <div class="feat-card" onclick="rotateTo('stages')">
+                <div class="feat-icon">📈</div>
+                <span>Stages</span>
+            </div>
+
+            <div class="feat-card" onclick="rotateTo('score')">
+                <div class="feat-icon">🏆</div>
+                <span>Score</span>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="carousel-wrapper">
+        <div class="glow-ring"></div>
+        <div class="glow-ring-outer"></div>
+
+        <div class="floating-word w1">GUESS</div>
+        <div class="floating-word w2">CODE</div>
+        <div class="floating-word w3">LEXI</div>
+        <div class="floating-word w4">WORD</div>
+
+        <button class="carousel-btn prev" onclick="moveCarousel(-1)">&#8249;</button>
+
+        <div class="carousel" id="carousel" onclick="openLightbox(current)">
+            <div class="carousel-track" id="carouselTrack">
+                <img src="screenshot1.png" alt="LexiGuess screenshot 1">
+                <img src="screenshot2.png" alt="LexiGuess screenshot 2">
+                <img src="screenshot3.png" alt="LexiGuess screenshot 3">
+                <img src="screenshot4.png" alt="LexiGuess screenshot 4">
+                <img src="screenshot5.png" alt="LexiGuess screenshot 5">
+                <img src="screenshot6.png" alt="LexiGuess screenshot 6">
+                <img src="screenshot7.png" alt="LexiGuess screenshot 7">
+    
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+
+        <button class="carousel-btn next" onclick="moveCarousel(1)">&#8250;</button>
+        <div class="carousel-hint">CLICK TO VIEW</div>
+    </div>
+</section>
+
+<!-- ===== VIDEO SECTION ===== -->
+<section class="video-section">
+    <h2 class="section-title">See It In Action</h2>
+    <p class="section-sub">Watch how LexiGuess works before you play</p>
+    <div class="video-wrapper">
+    <video autoplay muted loop>
+        <source src="lexiguess.mp4" type="video/mp4">
+    </video>
+</div>
+</section>
+
+<section class="features">
+    <h2 class="section-title">Features</h2>
+    <p class="section-sub">Everything you need to master your vocabulary</p>
+    <div class="cards">
+        <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3>Difficulty Levels</h3>
+            <p>Choose your challenge from beginner to expert mode</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">💡</div>
+            <h3>Smart Feedback</h3>
+            <p>Instant hints and explanations to help you learn</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🏅</div>
+            <h3>Score System</h3>
+            <p>Track your progress and beat your high scores</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📴</div>
+            <h3>Offline Game</h3>
+            <p>Play anywhere, anytime without internet connection</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 LexiGuess — Built with ❤️ by our team</p>
+</footer>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
+    <div class="lightbox-inner">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <button class="lightbox-btn" onclick="shiftLightbox(-1)">&#8249;</button>
+        <img id="lightboxImg" src="" alt="Screenshot preview">
+        <button class="lightbox-btn" onclick="shiftLightbox(1)">&#8250;</button>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 5</div>
+    </div>
+</div>
+
+<script>
+    // Map each feature button to a specific screenshot index
+    const sectionMap = {
+        guess:  6, // screenshot7.png (index 6 = 7th image)
+        stages: 1, // screenshot2.png
+        score:  2  // screenshot3.png
+    };
+
+    function rotateTo(section) {
+        const index = sectionMap[section] ?? 0;
+        // Jump the carousel to that slide and open the preview instantly
+        if (typeof goTo === 'function') goTo(index);
+        if (typeof openLightbox === 'function') openLightbox(index);
+    }
+
+    const images = [
+        'screenshot1.png',
+        'screenshot2.png',
+        'screenshot3.png',
+        'screenshot4.png',
+        'screenshot5.png',
+        'screenshot6.png',
+        'screenshot7.png'
+    ];
+
+    let current = 0;
+    const total = images.length;
+    const track = document.getElementById('carouselTrack');
+    const dotsContainer = document.getElementById('carouselDots');
+    const carousel = document.getElementById('carousel');
+    let lightboxIndex = 0;
+
+    // Create dots
+    for (let i = 0; i < total; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.onclick = (e) => { e.stopPropagation(); goTo(i); };
+        dotsContainer.appendChild(dot);
+    }
+
+    function goTo(index) {
+        current = (index + total) % total;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+        });
+    }
+
+    function moveCarousel(dir) {
+        event.stopPropagation();
+        goTo(current + dir);
+    }
+
+    // Auto-advance every 4 seconds
+    let autoplay = setInterval(() => goTo(current + 1), 4000);
+    carousel.addEventListener('mouseenter', () => clearInterval(autoplay));
+    carousel.addEventListener('mouseleave', () => autoplay = setInterval(() => goTo(current + 1), 4000));
+
+    // Swipe support
+    let startX = 0;
+    carousel.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    carousel.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+    });
+
+    // Mouse drag
+    let isDragging = false, dragStartX = 0;
+    carousel.addEventListener('mousedown', e => { isDragging = true; dragStartX = e.clientX; });
+    carousel.addEventListener('mouseup', e => {
+        if (!isDragging) return;
+        isDragging = false;
+        const diff = dragStartX - e.clientX;
+        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+    });
+    carousel.addEventListener('mouseleave', () => isDragging = false);
+
+    // Lightbox
+    function openLightbox(index) {
+        if (isDragging) return;
+        lightboxIndex = index;
+        document.getElementById('lightboxImg').src = images[lightboxIndex];
+        document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${total}`;
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function shiftLightbox(dir) {
+        event.stopPropagation();
+        lightboxIndex = (lightboxIndex + dir + total) % total;
+        const img = document.getElementById('lightboxImg');
+        img.style.animation = 'none';
+        img.offsetHeight; // reflow
+        img.style.animation = '';
+        img.src = images[lightboxIndex];
+        document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${total}`;
+        goTo(lightboxIndex);
+    }
+
+    function handleLightboxClick(e) {
+        if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    // Close with Escape key
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') shiftLightbox(-1);
+        if (e.key === 'ArrowRight') shiftLightbox(1);
+    });
+</script>
+
+</body>
+</html>

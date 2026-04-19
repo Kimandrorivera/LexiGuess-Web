@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>How to Play - LexiGuess</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.jpg" alt="LexiGuess" class="logo-img">
+        <h2>LexiGuess</h2>
+    </div>
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="howtoplay.html">HOW TO PLAY</a>
+        <a href="game.html" class="btn-more">DOWNLOAD</a>
+    </nav>
+</header>
+
+<section class="page-hero">
+    <h1>How to <span class="accent">Play</span></h1>
+    <p>Everything you need to know before your first guess</p>
+</section>
+
+<section class="htp">
+
+    <h2 class="htp-section-title">Objective</h2>
+    <div class="htp-box">
+        <p>Decipher the hidden programming word within <strong>6 attempts</strong> to claim victory and advance to the next stage.</p>
+    </div>
+
+    <h2 class="htp-section-title">Stages System</h2>
+    <div class="htp-box htp-stages">
+        <div class="stage-item">
+            <div class="stage-dot"></div>
+            <p>Each correct guess advances you to the next stage.</p>
+        </div>
+        <div class="stage-item">
+            <div class="stage-dot"></div>
+            <p>Failing a word <strong>resets your score to 0</strong> but keeps your stage progress.</p>
+        </div>
+    </div>
+
+    <h2 class="htp-section-title">Colour Feedback</h2>
+    <div class="colour-grid">
+        <div class="colour-card colour-green">
+            <div class="colour-dot dot-green"></div>
+            <h3>Green</h3>
+            <p>Correct letter in the correct position</p>
+        </div>
+        <div class="colour-card colour-amber">
+            <div class="colour-dot dot-amber"></div>
+            <h3>Yellow</h3>
+            <p>Letter exists in the word but wrong position</p>
+        </div>
+        <div class="colour-card colour-grey">
+            <div class="colour-dot dot-grey"></div>
+            <h3>Grey</h3>
+            <p>Letter is not in the word at all</p>
+        </div>
+    </div>
+
+    <h2 class="htp-section-title">Difficulty Levels</h2>
+    <div class="diff-grid">
+        <div class="diff-card">
+            <span class="diff-badge badge-easy">EASY</span>
+            <p>100 levels</p>
+        </div>
+        <div class="diff-card">
+            <span class="diff-badge badge-medium">MEDIUM</span>
+            <p>200 levels</p>
+        </div>
+        <div class="diff-card">
+            <span class="diff-badge badge-hard">HARD</span>
+            <p>300 levels</p>
+        </div>
+    </div>
+
+    <h2 class="htp-section-title">The Stickman</h2>
+    <div class="htp-box htp-stickman">
+        <svg width="80" height="110" viewBox="0 0 80 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="18" r="14" stroke="#a8dadc" stroke-width="2.5"/>
+            <line x1="40" y1="32" x2="40" y2="72" stroke="#a8dadc" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="40" y1="45" x2="18" y2="62" stroke="#a8dadc" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="40" y1="45" x2="62" y2="62" stroke="#a8dadc" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="40" y1="72" x2="22" y2="100" stroke="#a8dadc" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="40" y1="72" x2="58" y2="100" stroke="#a8dadc" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <p>The stickman starts <strong>fully assembled</strong>. Each wrong guess a body part will fall. After <strong>6 wrong guesses</strong>, all parts are gone and the game ends in defeat!</p>
+    </div>
+
+    <h2 class="htp-section-title">Scoring</h2>
+    <div class="score-grid">
+        <div class="score-card">
+            <div class="score-pts">100 pts</div>
+            <div class="score-formula">+ 10 × remaining attempts</div>
+            <span class="diff-badge badge-easy">EASY</span>
+        </div>
+        <div class="score-card">
+            <div class="score-pts">200 pts</div>
+            <div class="score-formula">+ 20 × remaining attempts</div>
+            <span class="diff-badge badge-medium">MEDIUM</span>
+        </div>
+        <div class="score-card">
+            <div class="score-pts">300 pts</div>
+            <div class="score-formula">+ 30 × remaining attempts</div>
+            <span class="diff-badge badge-hard">HARD</span>
+        </div>
+    </div>
+
+    <div class="htp-cta">
+        <a href="game.html"><button class="btn-primary">&#9654; Start Playing</button></a>
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2026 LexiGuess — Built with ❤️ by our team</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Ignore large media files
+*.mp4
+*.avi
+*.mov
+
+# Ignore screenshots if you don’t want them in GitHub
+screenshot*.png
+
+# Ignore system files
+Thumbs.db
+.DS_Store
+
+# Ignore build artifacts
+*.class
+*.log
+*.db
