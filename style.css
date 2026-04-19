@@ -920,3 +920,7 @@ footer {
     letter-spacing: 1px;
     color: var(--white);
 }
+
+.colour-card.colour-blue { background: rgba(69,123,157,0.15); border: 1px solid rgba(69,123,157,0.5); }
+.dot-blue { background: #457b9d; }
+.colour-blue h3 { color: #7ab8d4; }
